@@ -1,18 +1,18 @@
 # SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
+from enum import StrEnum
 import json
 import logging
-import shutil
-from enum import StrEnum
 from pathlib import Path
-from typing import Union
+import shutil
 
 import pandas as pd
+from pydantic import BaseModel, field_validator, model_validator
+
 from data_designer.config.utils.io_helpers import read_parquet_dataset
 from data_designer.config.utils.type_helpers import resolve_string_enum
 from data_designer.engine.dataset_builders.errors import ArtifactStorageError
-from pydantic import BaseModel, field_validator, model_validator
 
 logger = logging.getLogger(__name__)
 
@@ -57,7 +57,7 @@ class ArtifactStorage(BaseModel):
         return self.base_dataset_path / self.partial_results_folder_name
 
     @field_validator("artifact_path")
-    def validate_artifact_path(cls, v: Union[Path, str]) -> Path:
+    def validate_artifact_path(cls, v: Path | str) -> Path:
         v = Path(v)
         if not v.is_dir():
             raise ArtifactStorageError("Artifact path must exist and be a directory")

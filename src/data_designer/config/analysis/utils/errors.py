@@ -6,5 +6,3 @@ from ...errors import DataDesignerError
 
 class AnalysisReportError(DataDesignerError):
     """Base exception for analysis report errors."""
-
-    pass

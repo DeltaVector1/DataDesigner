@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import json
-import tempfile
 from pathlib import Path
+import tempfile
 
 import pytest
 

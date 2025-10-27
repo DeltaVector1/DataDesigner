@@ -1,12 +1,13 @@
 # SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
+from collections.abc import Callable
+from functools import partial
 import logging
 import random
-from functools import partial
-from typing import Callable
 
 import pandas as pd
+
 from data_designer.config.utils.constants import LOCALES_WITH_MANAGED_DATASETS
 from data_designer.engine.column_generators.generators.base import (
     FromScratchColumnGenerator,

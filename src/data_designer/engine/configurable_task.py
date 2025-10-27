@@ -3,7 +3,7 @@
 
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import Generic, Type, TypeVar
+from typing import Generic, TypeVar
 
 import pandas as pd
 
@@ -30,7 +30,7 @@ class ConfigurableTask(ABC, Generic[TaskConfigT]):
         self._initialize()
 
     @classmethod
-    def get_config_type(cls) -> Type[TaskConfigT]:
+    def get_config_type(cls) -> type[TaskConfigT]:
         for base in cls.__orig_bases__:
             if hasattr(base, "__args__") and len(base.__args__) == 1 and issubclass(base.__args__[0], ConfigBase):
                 return base.__args__[0]
@@ -68,11 +68,9 @@ class ConfigurableTask(ABC, Generic[TaskConfigT]):
 
     def _initialize(self) -> None:
         """An internal method for custom initialization logic, which will be called in the constructor."""
-        pass
 
     def _validate(self) -> None:
         """An internal method for custom validation logic, which will be called in the constructor."""
-        pass
 
     def _validate_resources(self) -> None:
         for resource in self.metadata().required_resources or []:

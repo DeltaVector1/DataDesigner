@@ -3,8 +3,8 @@
 
 from unittest.mock import patch
 
-import pytest
 from jinja2 import TemplateSyntaxError
+import pytest
 
 from data_designer.config.utils.errors import UserJinjaTemplateSyntaxError
 from data_designer.config.utils.misc import (

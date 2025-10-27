@@ -50,7 +50,6 @@ class ColumnGenerator(ConfigurableTask[TaskConfigT], ABC):
         `generate` method. This is to avoid logging the same information multiple times when running
         generators in parallel.
         """
-        pass
 
 
 class FromScratchColumnGenerator(ColumnGenerator[TaskConfigT], ABC):

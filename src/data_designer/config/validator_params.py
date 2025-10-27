@@ -2,10 +2,9 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from enum import Enum
-from typing import Any, Optional, Union
+from typing import Any, Self, TypeAlias
 
 from pydantic import Field, field_serializer, model_validator
-from typing_extensions import Self, TypeAlias
 
 from .base import ConfigBase
 from .utils.code_lang import SQL_DIALECTS, CodeLang
@@ -35,7 +34,7 @@ class LocalCallableValidatorParams(ConfigBase):
     validation_function: Any = Field(
         description="Function (Callable[[pd.DataFrame], pd.DataFrame]) to validate the data"
     )
-    output_schema: Optional[dict[str, Any]] = Field(
+    output_schema: dict[str, Any] | None = Field(
         default=None, description="Expected schema for local callable validator's output"
     )
 
@@ -52,7 +51,7 @@ class LocalCallableValidatorParams(ConfigBase):
 
 class RemoteValidatorParams(ConfigBase):
     endpoint_url: str = Field(description="URL of the remote endpoint")
-    output_schema: Optional[dict[str, Any]] = Field(
+    output_schema: dict[str, Any] | None = Field(
         default=None, description="Expected schema for remote validator's output"
     )
     timeout: float = Field(default=30.0, gt=0, description="The timeout for the HTTP request")
@@ -61,8 +60,4 @@ class RemoteValidatorParams(ConfigBase):
     max_parallel_requests: int = Field(default=4, ge=1, description="The maximum number of parallel requests to make")
 
 
-ValidatorParamsT: TypeAlias = Union[
-    CodeValidatorParams,
-    LocalCallableValidatorParams,
-    RemoteValidatorParams,
-]
+ValidatorParamsT: TypeAlias = CodeValidatorParams | LocalCallableValidatorParams | RemoteValidatorParams

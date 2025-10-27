@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import pandas as pd
-import pytest
 from pydantic import ValidationError
+import pytest
 
 from data_designer.config.columns import DataDesignerColumnType, SamplerColumnConfig, SamplerType
 from data_designer.engine.analysis.column_profilers.base import (

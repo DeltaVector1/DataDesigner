@@ -1,9 +1,9 @@
 # SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
+from enum import StrEnum
 import json
 import logging
-from enum import StrEnum
 
 from data_designer.config.columns import DataDesignerColumnType, SingleColumnConfig
 from data_designer.config.models import ModelConfig

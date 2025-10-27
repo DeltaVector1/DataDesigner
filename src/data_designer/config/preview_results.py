@@ -3,8 +3,6 @@
 
 from __future__ import annotations
 
-from typing import Optional
-
 import pandas as pd
 
 from .analysis.dataset_profiler import DatasetProfilerResults
@@ -17,8 +15,8 @@ class PreviewResults(WithRecordSamplerMixin):
         self,
         *,
         config_builder: DataDesignerConfigBuilder,
-        dataset: Optional[pd.DataFrame] = None,
-        analysis: Optional[DatasetProfilerResults] = None,
+        dataset: pd.DataFrame | None = None,
+        analysis: DatasetProfilerResults | None = None,
     ):
         """Creates a new instance with results from a Data Designer preview run.
 

@@ -1,7 +1,6 @@
 # SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-from typing import Type
 from unittest.mock import Mock
 
 import pandas as pd
@@ -49,7 +48,7 @@ def test_configurable_task_concrete_implementation():
 
     class TestTask(ConfigurableTask[TestConfig]):
         @classmethod
-        def get_config_type(cls) -> Type[TestConfig]:
+        def get_config_type(cls) -> type[TestConfig]:
             return TestConfig
 
         @classmethod
@@ -82,7 +81,7 @@ def test_configurable_task_config_validation():
 
     class TestTask(ConfigurableTask[TestConfig]):
         @classmethod
-        def get_config_type(cls) -> Type[TestConfig]:
+        def get_config_type(cls) -> type[TestConfig]:
             return TestConfig
 
         @classmethod
@@ -115,7 +114,7 @@ def test_configurable_task_resource_validation():
 
     class TestTask(ConfigurableTask[TestConfig]):
         @classmethod
-        def get_config_type(cls) -> Type[TestConfig]:
+        def get_config_type(cls) -> type[TestConfig]:
             return TestConfig
 
         @classmethod

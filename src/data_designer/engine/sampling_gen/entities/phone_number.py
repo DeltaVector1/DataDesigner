@@ -1,19 +1,18 @@
 # SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-import random
 from pathlib import Path
-from typing import Optional
+import random
 
 import pandas as pd
 from pydantic import BaseModel, Field, field_validator
 
 ZIP_AREA_CODE_DATA = pd.read_parquet(Path(__file__).parent / "assets" / "zip_area_code_map.parquet")
-ZIPCODE_AREA_CODE_MAP = dict(zip(ZIP_AREA_CODE_DATA["zipcode"], ZIP_AREA_CODE_DATA["area_code"]))
-ZIPCODE_POPULATION_MAP = dict(zip(ZIP_AREA_CODE_DATA["zipcode"], ZIP_AREA_CODE_DATA["count"]))
+ZIPCODE_AREA_CODE_MAP = dict(zip(ZIP_AREA_CODE_DATA["zipcode"], ZIP_AREA_CODE_DATA["area_code"], strict=False))
+ZIPCODE_POPULATION_MAP = dict(zip(ZIP_AREA_CODE_DATA["zipcode"], ZIP_AREA_CODE_DATA["count"], strict=False))
 
 
-def get_area_code(zip_prefix: Optional[str] = None) -> str:
+def get_area_code(zip_prefix: str | None = None) -> str:
     """
     Sample an area code for the given ZIP code prefix, population-weighted.
 
@@ -24,7 +23,7 @@ def get_area_code(zip_prefix: Optional[str] = None) -> str:
         A sampled area code matching the prefix, population-weighted.
     """
     if zip_prefix is None:
-        zipcodes, weights = zip(*ZIPCODE_POPULATION_MAP.items())
+        zipcodes, weights = zip(*ZIPCODE_POPULATION_MAP.items(), strict=False)
         zipcode = random.choices(zipcodes, weights=weights, k=1)[0]
         return str(ZIPCODE_AREA_CODE_MAP[zipcode])
     if len(zip_prefix) == 5:
@@ -33,7 +32,7 @@ def get_area_code(zip_prefix: Optional[str] = None) -> str:
         except KeyError:
             raise ValueError(f"ZIP code {zip_prefix} not found.")
     matching_zipcodes = [[z, c] for z, c in ZIPCODE_POPULATION_MAP.items() if z.startswith(zip_prefix)]
-    zipcodes, weights = zip(*matching_zipcodes)
+    zipcodes, weights = zip(*matching_zipcodes, strict=False)
     if not zipcodes:
         raise ValueError(f"No ZIP codes found with prefix {zip_prefix}.")
     zipcode = random.choices(zipcodes, weights=weights, k=1)[0]

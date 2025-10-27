@@ -1,8 +1,8 @@
 # SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-import random
 from datetime import date, timedelta
+import random
 from typing import Any, Literal, TypeAlias
 
 from data_designer.config.utils.constants import LOCALES_WITH_MANAGED_DATASETS
@@ -78,10 +78,10 @@ def generate_phone_number(locale: str, age: int, postcode: str | None, style: st
     if locality_var < 0.6:
         # Exact match to postcode 60% of the time
         return PhoneNumber.from_zip_prefix(postcode).format(style=style)
-    elif locality_var < 0.8:
+    if locality_var < 0.8:
         # Nearby postcodes 20% of the time
         return PhoneNumber.from_zip_prefix(postcode[:4]).format(style=style)
-    elif locality_var < 0.9:
+    if locality_var < 0.9:
         # More distant postcodes 10% of the time
         return PhoneNumber.from_zip_prefix(postcode[:3]).format(style=style)
     # Random (population-weighted) area code 10% of the time

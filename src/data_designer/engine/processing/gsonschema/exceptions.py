@@ -6,5 +6,3 @@ from jsonschema import ValidationError
 
 class JSONSchemaValidationError(ValidationError):
     """Alias of ValidationError to ease imports."""
-
-    ...

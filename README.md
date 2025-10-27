@@ -92,7 +92,7 @@ config_builder.add_column(
             "You are a customer named {{ customer.first_name }} from {{ customer.city }}, "
             "{{ customer.state }}. Tell me about your experience working in the "
             "{{ product_category }} department of our company."
-        ),        
+        ),
         system_prompt=SYSTEM_PROMPT,
         model_alias=MODEL_ALIAS,
     )

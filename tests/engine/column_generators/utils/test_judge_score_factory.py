@@ -3,8 +3,8 @@
 
 from enum import Enum
 
-import pytest
 from pydantic import BaseModel
+import pytest
 
 from data_designer.config.columns import Score
 from data_designer.engine.column_generators.utils.judge_score_factory import (

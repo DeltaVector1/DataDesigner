@@ -1,10 +1,9 @@
 # SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-from typing import Any
+from typing import Any, Self
 
 from pydantic import field_serializer, model_validator
-from typing_extensions import Self
 
 from data_designer.config.columns import SamplerColumnConfig
 from data_designer.config.sampler_params import SamplerParamsT, SamplerType

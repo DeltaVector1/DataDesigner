@@ -4,7 +4,6 @@
 from typing import Any
 from unittest.mock import MagicMock
 
-import pytest
 from litellm.exceptions import (
     APIConnectionError,
     APIError,
@@ -19,6 +18,7 @@ from litellm.exceptions import (
     UnprocessableEntityError,
     UnsupportedParamsError,
 )
+import pytest
 
 from data_designer.engine.models.errors import (
     DataDesignerError,

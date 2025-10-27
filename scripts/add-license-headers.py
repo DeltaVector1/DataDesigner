@@ -1,9 +1,9 @@
 # SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-import re
 from datetime import datetime
 from pathlib import Path
+import re
 
 
 def add_license_header_to_file(file_path: Path, license_header: str) -> bool:

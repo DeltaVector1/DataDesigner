@@ -1,10 +1,10 @@
 # SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-import logging
 from abc import ABC, abstractmethod
 from collections.abc import Iterator
 from contextlib import contextmanager
+import logging
 from pathlib import Path
 from typing import IO
 
@@ -118,7 +118,7 @@ def init_managed_blob_storage(assets_storage: str = "s3://gretel-managed-assets-
 
         return S3BlobStorageProvider(bucket_name=bucket_name)
 
-    elif assets_storage.startswith("/"):
+    if assets_storage.startswith("/"):
         path = Path(assets_storage)
         if not path.exists():
             raise RuntimeError(f"Local storage path {assets_storage!r} does not exist.")

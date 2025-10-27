@@ -1,14 +1,14 @@
 # SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
+from abc import ABC, abstractmethod
 import os
 import tempfile
-from abc import ABC, abstractmethod
 
-import duckdb
-import pandas as pd
 from datasets import DatasetDict, load_dataset
+import duckdb
 from huggingface_hub import HfApi, HfFileSystem
+import pandas as pd
 
 from data_designer.config.utils.io_helpers import validate_dataset_file_path
 from data_designer.logging import quiet_noisy_logger
@@ -20,8 +20,6 @@ _HF_DATASETS_PREFIX = "hf://datasets/"
 
 class MalformedFileIdError(Exception):
     """Raised when file_id format is invalid."""
-
-    pass
 
 
 class SeedDatasetDataStore(ABC):
@@ -88,8 +86,7 @@ class HfHubSeedDatasetDataStore(SeedDatasetDataStore):
         if is_file:
             self._validate_file(repo_id, filename)
             return self._download_and_load_file(repo_id, filename)
-        else:
-            return self._download_and_load_directory(repo_id, filename)
+        return self._download_and_load_directory(repo_id, filename)
 
     def _validate_repo(self, repo_id: str) -> None:
         """Validate that the repository exists and is a dataset repo."""

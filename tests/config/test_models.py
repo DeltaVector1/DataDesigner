@@ -1,13 +1,13 @@
 # SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
+from collections import Counter
 import json
 import tempfile
-from collections import Counter
 
+from pydantic import ValidationError
 import pytest
 import yaml
-from pydantic import ValidationError
 
 from data_designer.config.errors import InvalidConfigError
 from data_designer.config.models import (
@@ -91,7 +91,7 @@ def test_manual_distribution_sampling():
 
     sample_counts = Counter(samples)
     total_samples = sum(sample_counts.values())
-    for value, weight in zip(values, weights):
+    for value, weight in zip(values, weights, strict=False):
         observed_freq = sample_counts[value] / total_samples
         expected_freq = weight
         # Allow small margin for randomness

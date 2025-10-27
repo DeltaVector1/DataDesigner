@@ -50,11 +50,11 @@ class ExpressionColumnGenerator(WithJinja2UserTemplateRendering, ColumnGenerator
     def _cast_type(self, value: str) -> str | float | int | bool:
         if self.config.dtype == "str":
             return value
-        elif self.config.dtype == "float":
+        if self.config.dtype == "float":
             return float(value)
-        elif self.config.dtype == "int":
+        if self.config.dtype == "int":
             return int(float(value))
-        elif self.config.dtype == "bool":
+        if self.config.dtype == "bool":
             try:
                 return bool(int(float(value)))
             except ValueError:

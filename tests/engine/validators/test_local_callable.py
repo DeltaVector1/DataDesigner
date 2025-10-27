@@ -17,8 +17,7 @@ def test_validate_with_callback_validator(stub_data: list[dict]):
     def callback_fn(df: pd.DataFrame) -> pd.DataFrame:
         if df.iloc[0]["text"] == "Sample text":
             return pd.DataFrame([{"is_valid": True, "confidence": "0.98"}])
-        else:
-            return pd.DataFrame([{"is_valid": False, "confidence": "0.0"}])
+        return pd.DataFrame([{"is_valid": False, "confidence": "0.0"}])
 
     validator = LocalCallableValidator(
         LocalCallableValidatorParams(

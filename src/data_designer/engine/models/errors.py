@@ -3,9 +3,9 @@
 
 from __future__ import annotations
 
-import logging
 from collections.abc import Callable
 from functools import wraps
+import logging
 from typing import Any
 
 from litellm.exceptions import (
@@ -44,8 +44,7 @@ def get_exception_primary_cause(exception: BaseException) -> BaseException:
     """
     if exception.__cause__ is None:
         return exception
-    else:
-        return get_exception_primary_cause(exception.__cause__)
+    return get_exception_primary_cause(exception.__cause__)
 
 
 class GenerationValidationFailureError(Exception): ...

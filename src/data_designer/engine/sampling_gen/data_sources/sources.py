@@ -5,6 +5,8 @@ import uuid
 
 import numpy as np
 import pandas as pd
+from scipy import stats
+
 from data_designer.config.sampler_params import (
     BernoulliMixtureSamplerParams,
     BernoulliSamplerParams,
@@ -33,7 +35,6 @@ from data_designer.engine.sampling_gen.data_sources.base import (
 )
 from data_designer.engine.sampling_gen.data_sources.errors import InvalidSamplerParamsError
 from data_designer.engine.sampling_gen.people_gen import PeopleGen
-from scipy import stats
 
 ONE_BILLION = 10**9
 

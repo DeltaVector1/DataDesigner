@@ -9,10 +9,10 @@ from typing import Any
 
 import numpy as np
 import pandas as pd
-import pyarrow as pa
-import tiktoken
 from pandas import Series
 from pandas.core.dtypes.common import is_integer_dtype, is_numeric_dtype
+import pyarrow as pa
+import tiktoken
 
 from data_designer.config.analysis.column_statistics import (
     CategoricalDistribution,

@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import random
 import threading
-from typing import Optional, Union
 
 import httpx
 import litellm
@@ -90,7 +89,7 @@ class CustomRouter(Router):
         self._initial_retry_after_s = initial_retry_after_s
         self._jitter_pct = jitter_pct
 
-    def _extract_retry_delay_from_headers(self, e: Exception) -> Optional[Union[int, float]]:
+    def _extract_retry_delay_from_headers(self, e: Exception) -> int | float | None:
         """
         Most of this code logic was extracted directly from the parent
         `Router`'s `_time_to_sleep_before_retry` function. Our override
@@ -99,7 +98,7 @@ class CustomRouter(Router):
         return this info, we'll simply use that retry value returned here.
         """
 
-        response_headers: Optional[httpx.Headers] = None
+        response_headers: httpx.Headers | None = None
         if hasattr(e, "response") and hasattr(e.response, "headers"):  # type: ignore
             response_headers = e.response.headers  # type: ignore
         if hasattr(e, "litellm_response_headers"):
@@ -110,8 +109,7 @@ class CustomRouter(Router):
         # If the API asks us to wait a certain amount of time (and it's a reasonable amount), just do what it says.
         if retry_after is not None and 0 < retry_after <= 60:
             return retry_after
-        else:
-            return None
+        return None
 
     @override
     def _time_to_sleep_before_retry(
@@ -119,9 +117,9 @@ class CustomRouter(Router):
         e: Exception,
         remaining_retries: int,
         num_retries: int,
-        healthy_deployments: Optional[list] = None,
-        all_deployments: Optional[list] = None,
-    ) -> Union[int, float]:
+        healthy_deployments: list | None = None,
+        all_deployments: list | None = None,
+    ) -> int | float:
         """
         Implements exponential backoff for retries.
 

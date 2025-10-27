@@ -3,6 +3,7 @@
 
 import pandas as pd
 import pytest
+
 from data_designer.config.sampler_constraints import (
     ColumnInequalityConstraint,
     ConstraintType,

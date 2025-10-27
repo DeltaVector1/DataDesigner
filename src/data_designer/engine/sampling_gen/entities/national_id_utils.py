@@ -1,8 +1,8 @@
 # SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-import random
 from datetime import date
+import random
 
 SSN_RANDOMIZATION_DATE = date(2011, 6, 25)
 

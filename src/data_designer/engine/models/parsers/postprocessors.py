@@ -1,9 +1,10 @@
 # SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-from typing import Optional, Type
 
 import json_repair
+from pydantic import BaseModel, ValidationError
+
 from data_designer.engine.models.parsers.types import (
     CodeBlock,
     LLMStructuredResponse,
@@ -11,7 +12,6 @@ from data_designer.engine.models.parsers.types import (
     StructuredDataBlock,
     TextBlock,
 )
-from pydantic import BaseModel, ValidationError
 
 
 def merge_text_blocks(
@@ -59,12 +59,12 @@ def deserialize_json_code(
 
 
 class RealizePydanticTypes:
-    types: list[Type[BaseModel]]
+    types: list[type[BaseModel]]
 
-    def __init__(self, types: list[Type[BaseModel]]):
+    def __init__(self, types: list[type[BaseModel]]):
         self.types = types
 
-    def _fit_types(self, obj: dict) -> Optional[BaseModel]:
+    def _fit_types(self, obj: dict) -> BaseModel | None:
         final_obj = None
 
         for t in self.types:

@@ -2,13 +2,13 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import json
-import tempfile
 from pathlib import Path
+import tempfile
 from unittest.mock import patch
 
+from pydantic import BaseModel, ValidationError
 import pytest
 import yaml
-from pydantic import BaseModel, ValidationError
 
 from data_designer.config.analysis.column_profilers import JudgeScoreProfilerConfig
 from data_designer.config.columns import (
@@ -378,13 +378,13 @@ def test_config_export_to_files(stub_data_designer_builder):
     # verify config export to JSON file
     with tempfile.NamedTemporaryFile(prefix="config", suffix=".json") as tmp_file:
         ndd_config.to_json(path=tmp_file.name)
-        with open(tmp_file.name, "r") as f:
+        with open(tmp_file.name) as f:
             assert json.loads(f.read())["model_configs"] == ndd_config.to_dict()["model_configs"]
 
     # verify config export to YAML file
     with tempfile.NamedTemporaryFile(prefix="config", suffix=".yaml") as tmp_file:
         ndd_config.to_yaml(path=tmp_file.name)
-        with open(tmp_file.name, "r") as f:
+        with open(tmp_file.name) as f:
             deserialized_config = yaml.safe_load(f.read())
             assert deserialized_config["model_configs"] == ndd_config.to_dict()["model_configs"]
             # verify enums are rendered as plain strings in the yaml file
@@ -393,7 +393,7 @@ def test_config_export_to_files(stub_data_designer_builder):
     # verify config export to .yml file
     with tempfile.NamedTemporaryFile(prefix="config", suffix=".yml") as tmp_file:
         ndd_config.to_yaml(path=tmp_file.name)
-        with open(tmp_file.name, "r") as f:
+        with open(tmp_file.name) as f:
             assert yaml.safe_load(f.read())["model_configs"] == ndd_config.to_dict()["model_configs"]
 
 

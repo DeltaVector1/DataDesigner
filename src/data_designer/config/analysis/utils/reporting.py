@@ -5,7 +5,7 @@ from __future__ import annotations
 
 from enum import Enum
 from pathlib import Path
-from typing import TYPE_CHECKING, Optional, Union
+from typing import TYPE_CHECKING
 
 from rich.align import Align
 from rich.console import Console, Group
@@ -49,8 +49,8 @@ DEFAULT_INCLUDE_SECTIONS = [
 
 def generate_analysis_report(
     analysis: DatasetProfilerResults,
-    save_path: Optional[Union[str, Path]] = None,
-    include_sections: Optional[list[Union[ReportSection, DataDesignerColumnType]]] = None,
+    save_path: str | Path | None = None,
+    include_sections: list[ReportSection | DataDesignerColumnType] | None = None,
 ) -> None:
     """Generate an analysis report for dataset profiling results.
 
@@ -166,7 +166,7 @@ def create_judge_score_summary_table(
     layout = Table.grid(Column(), Column(), expand=True, padding=(0, 2))
 
     histogram_table = create_rich_histogram_table(
-        {str(s): c for s, c in zip(histogram.categories, histogram.counts)},
+        {str(s): c for s, c in zip(histogram.categories, histogram.counts, strict=False)},
         ("score", "count"),
         name_style=HIST_NAME_STYLE,
         value_style=HIST_VALUE_STYLE,

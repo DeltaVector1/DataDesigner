@@ -1,11 +1,10 @@
 # SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-from typing import Any, Optional, Protocol, Type, runtime_checkable
+from typing import Any, Protocol, Self, runtime_checkable
 
 from lxml.etree import _Element
 from pydantic import BaseModel, Field
-from typing_extensions import Self
 
 
 class LLMStructuredResponse(BaseModel):
@@ -30,7 +29,7 @@ class LLMStructuredResponse(BaseModel):
         out.parsed = out.parsed[-n:]
         return out
 
-    def filter(self, block_types: list[Type[BaseModel]]) -> Self:
+    def filter(self, block_types: list[type[BaseModel]]) -> Self:
         out = self.model_copy()
         out.parsed = [b for b in out.parsed if isinstance(b, tuple(block_types))]
         return out
@@ -69,7 +68,7 @@ class TextBlock(BaseModel):
 
 class CodeBlock(BaseModel):
     code: str
-    code_lang: Optional[str] = None
+    code_lang: str | None = None
 
 
 class StructuredDataBlock(BaseModel):

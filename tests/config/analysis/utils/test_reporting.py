@@ -1,8 +1,8 @@
 # SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-import tempfile
 from pathlib import Path
+import tempfile
 
 import pytest
 
@@ -60,7 +60,7 @@ def test_generate_analysis_report_with_save_path_html(sample_dataset_profiler_re
         assert Path(tmp_path).stat().st_size > 0
 
         # Verify it's valid HTML by checking for basic HTML structure
-        with open(tmp_path, "r") as f:
+        with open(tmp_path) as f:
             content = f.read()
             assert "<html" in content.lower() or "<!doctype" in content.lower()
 
@@ -81,7 +81,7 @@ def test_generate_analysis_report_with_save_path_svg(sample_dataset_profiler_res
         assert Path(tmp_path).stat().st_size > 0
 
         # Verify it's valid SVG by checking for SVG structure
-        with open(tmp_path, "r") as f:
+        with open(tmp_path) as f:
             content = f.read()
             assert "<svg" in content.lower()
 
@@ -102,7 +102,7 @@ def test_generate_analysis_report_with_path_object(sample_dataset_profiler_resul
         assert tmp_path.stat().st_size > 0
 
         # Verify it's valid HTML by checking for basic HTML structure
-        with open(tmp_path, "r") as f:
+        with open(tmp_path) as f:
             content = f.read()
             assert "<html" in content.lower() or "<!doctype" in content.lower()
 

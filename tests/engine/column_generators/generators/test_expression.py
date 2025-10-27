@@ -163,6 +163,6 @@ def test_generate_with_missing_columns():
 
     with pytest.raises(
         ExpressionTemplateRenderError,
-        match="There was an error preparing the Jinja2 expression template. The following columns \['col1'\] are missing!",
+        match=r"There was an error preparing the Jinja2 expression template. The following columns \['col1'\] are missing!",
     ):
         generator.generate(df)

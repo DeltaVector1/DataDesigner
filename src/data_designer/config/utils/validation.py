@@ -5,7 +5,6 @@ from __future__ import annotations
 
 from enum import Enum
 from string import Formatter
-from typing import Optional
 
 from jinja2 import meta
 from jinja2.sandbox import ImmutableSandboxedEnvironment
@@ -40,7 +39,7 @@ class ViolationLevel(str, Enum):
 
 
 class Violation(BaseModel):
-    column: Optional[str] = None
+    column: str | None = None
     type: ViolationType
     message: str
     level: ViolationLevel
@@ -148,7 +147,7 @@ def validate_prompt_templates(
             if (
                 prompt_type == "prompt"
                 and len(prompt_references) == 0
-                and (not hasattr(column, "multi_modal_context") or getattr(column, "multi_modal_context") is None)
+                and (not hasattr(column, "multi_modal_context") or column.multi_modal_context is None)
             ):
                 message = (
                     f"The {prompt_type} template for '{column.name}' does not reference any columns. "

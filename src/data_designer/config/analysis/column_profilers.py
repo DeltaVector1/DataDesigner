@@ -3,12 +3,11 @@
 
 from abc import ABC
 from enum import Enum
-from typing import Optional, Union
+from typing import TypeAlias
 
 from pydantic import BaseModel, Field
 from rich.panel import Panel
 from rich.table import Column, Table
-from typing_extensions import TypeAlias
 
 from ..base import ConfigBase
 from ..utils.visualization import ColorPalette
@@ -38,20 +37,20 @@ class ColumnProfilerResults(BaseModel, ABC):
 
 class JudgeScoreProfilerConfig(ConfigBase):
     model_alias: str
-    summary_score_sample_size: Optional[int] = Field(default=20, ge=1)
+    summary_score_sample_size: int | None = Field(default=20, ge=1)
 
 
 class JudgeScoreSample(BaseModel):
-    score: Union[int, str]
+    score: int | str
     reasoning: str
 
 
 class JudgeScoreDistributions(BaseModel):
-    scores: dict[str, list[Union[int, str]]]
+    scores: dict[str, list[int | str]]
     reasoning: dict[str, list[str]]
     distribution_types: dict[str, ColumnDistributionType]
-    distributions: dict[str, Union[CategoricalDistribution, NumericalDistribution, MissingValue]]
-    histograms: dict[str, Union[CategoricalHistogramData, MissingValue]]
+    distributions: dict[str, CategoricalDistribution | NumericalDistribution | MissingValue]
+    histograms: dict[str, CategoricalHistogramData | MissingValue]
 
 
 class JudgeScoreSummary(BaseModel):
@@ -63,7 +62,7 @@ class JudgeScoreSummary(BaseModel):
 class JudgeScoreProfilerResults(ColumnProfilerResults):
     column_name: str
     summaries: dict[str, JudgeScoreSummary]
-    score_distributions: Union[JudgeScoreDistributions, MissingValue]
+    score_distributions: JudgeScoreDistributions | MissingValue
 
     def create_report_section(self) -> Panel:
         layout = Table.grid(Column(), expand=True, padding=(2, 0))

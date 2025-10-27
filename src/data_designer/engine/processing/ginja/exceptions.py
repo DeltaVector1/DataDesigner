@@ -9,19 +9,13 @@ from jinja2 import TemplateAssertionError
 class UserTemplateError(Exception):
     """Exception for user-induced template flaws, intentional or not."""
 
-    pass
-
 
 class UserTemplateUnsupportedFiltersError(UserTemplateError):
     """Specific exception for the case of unsupported filters."""
 
-    pass
-
 
 class RecordContentsError(Exception):
     """Exception for cases involving the record providing template context."""
-
-    pass
 
 
 def maybe_handle_missing_filter_exception(exception: BaseException, available_jinja_filters: list[str]) -> None:
@@ -49,12 +43,9 @@ def maybe_handle_missing_filter_exception(exception: BaseException, available_ji
     match = re.search(r"No filter named '([^']+)'", exc_message)
     if not match:
         return
-    else:
-        missing_filter_name = match.group(1)
-        available_filter_str = ", ".join(available_jinja_filters)
-        raise UserTemplateUnsupportedFiltersError(
-            (
-                f"The Jinja2 filter `{{{{ ... | {missing_filter_name} }}}}` "
-                f"is not a permitted operation. Available filters: {available_filter_str}"
-            )
-        ) from exception
+    missing_filter_name = match.group(1)
+    available_filter_str = ", ".join(available_jinja_filters)
+    raise UserTemplateUnsupportedFiltersError(
+        f"The Jinja2 filter `{{{{ ... | {missing_filter_name} }}}}` "
+        f"is not a permitted operation. Available filters: {available_filter_str}"
+    ) from exception
