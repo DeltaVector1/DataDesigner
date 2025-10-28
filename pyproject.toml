@@ -38,7 +38,7 @@ dependencies = [
   "json-repair==0.48.0",
   "jsonpath-rust-bindings>=1.0",
   "litellm==1.73.6",
-  "lxml==5.2.2",
+  "lxml>=6.0.2",
   "marko==2.1.2",
   "networkx==3.0",
   "pydantic[email]>=2.9.2",
