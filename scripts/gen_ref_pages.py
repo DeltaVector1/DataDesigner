@@ -28,21 +28,22 @@ for path in sorted(src.rglob("*.py")):
 
         init_module = data[parts[1:]] if len(parts) > 1 else data
         has_docstrings = init_module.has_docstring or any(
-            member.has_docstrings for member in init_module.members.values()
+            member.has_docstrings
+            for member in init_module.members.values()
             if not (member.is_alias or member.is_module)
-        ) 
+        )
     else:
         has_docstrings = data[parts[1:]].has_docstrings
 
     if not has_docstrings:
         continue
 
-    nav[parts] = doc_path.as_posix()  
+    nav[parts] = doc_path.as_posix()
     with mkdocs_gen_files.open(full_doc_path, "w") as fd:
         ident = ".".join(parts)
         fd.write(f"::: {ident}")
 
     mkdocs_gen_files.set_edit_path(full_doc_path, path.relative_to(root))
 
-with mkdocs_gen_files.open("reference/SUMMARY.md", "w") as nav_file:  
+with mkdocs_gen_files.open("reference/SUMMARY.md", "w") as nav_file:
     nav_file.writelines(nav.build_literate_nav())
