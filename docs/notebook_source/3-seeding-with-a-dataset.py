@@ -13,13 +13,13 @@
 # ---
 
 # %% [markdown]
-# # 🎨 Data Designer 101: Seeding Synthetic Data Generation with an External Dataset
+# # 🎨 Data Designer Tutorial: Seeding Synthetic Data Generation with an External Dataset
 #
 # #### 📚 What you'll learn
 #
 # In this notebook, we will demonstrate how to seed synthetic data generation in Data Designer with an external dataset.
 #
-# If this is your first time using Data Designer, we recommend starting with the [first notebook](/notebooks/1-the-basics/) in this 101 series.
+# If this is your first time using Data Designer, we recommend starting with the [first notebook](/notebooks/1-the-basics/) in this tutorial series.
 #
 
 # %% [markdown]
@@ -240,10 +240,10 @@ config_builder.validate()
 #
 
 # %%
-preview = data_designer_client.preview(config_builder)
+preview = data_designer_client.preview(config_builder, num_records=2)
 
 # %%
-# Run this cell multiple times to cycle through the 10 preview records.
+# Run this cell multiple times to cycle through the 2 preview records.
 preview.display_sample_record()
 
 # %%
@@ -271,7 +271,7 @@ preview.analysis.to_report()
 #
 
 # %%
-job_results = data_designer_client.create(config_builder, num_records=20)
+job_results = data_designer_client.create(config_builder, num_records=10)
 
 # %%
 # Load the generated dataset as a pandas DataFrame.
