@@ -20,6 +20,7 @@ from data_designer.config.models import (
     ModelProvider,
 )
 from data_designer.config.preview_results import PreviewResults
+from data_designer.config.run_config import RunConfig
 from data_designer.config.utils.constants import (
     DEFAULT_NUM_RECORDS,
     MANAGED_ASSETS_PATH,
@@ -108,6 +109,7 @@ class DataDesigner(DataDesignerInterface[DatasetCreationResults]):
         self._secret_resolver = secret_resolver or DEFAULT_SECRET_RESOLVER
         self._artifact_path = Path(artifact_path) if artifact_path is not None else Path.cwd() / "artifacts"
         self._buffer_size = DEFAULT_BUFFER_SIZE
+        self._run_config = RunConfig()
         self._managed_assets_path = Path(managed_assets_path or MANAGED_ASSETS_PATH)
         self._model_providers = self._resolve_model_providers(model_providers)
         self._model_provider_registry = resolve_model_provider_registry(
@@ -311,6 +313,20 @@ class DataDesigner(DataDesignerInterface[DatasetCreationResults]):
             raise InvalidBufferValueError("Buffer size must be greater than 0.")
         self._buffer_size = buffer_size
 
+    def set_run_config(self, run_config: RunConfig) -> None:
+        """Set the runtime configuration for dataset generation.
+
+        Args:
+            run_config: A RunConfig instance containing runtime settings such as
+                early shutdown behavior. Import RunConfig from data_designer.essentials.
+
+        Example:
+            >>> from data_designer.essentials import DataDesigner, RunConfig
+            >>> dd = DataDesigner()
+            >>> dd.set_run_config(RunConfig(disable_early_shutdown=True))
+        """
+        self._run_config = run_config
+
     def _resolve_model_providers(self, model_providers: list[ModelProvider] | None) -> list[ModelProvider]:
         if model_providers is None:
             model_providers = get_default_providers()
@@ -327,7 +343,9 @@ class DataDesigner(DataDesignerInterface[DatasetCreationResults]):
         return model_providers or []
 
     def _create_dataset_builder(
-        self, config_builder: DataDesignerConfigBuilder, resource_provider: ResourceProvider
+        self,
+        config_builder: DataDesignerConfigBuilder,
+        resource_provider: ResourceProvider,
     ) -> ColumnWiseDatasetBuilder:
         config = compile_data_designer_config(config_builder, resource_provider)
 
@@ -365,6 +383,7 @@ class DataDesigner(DataDesignerInterface[DatasetCreationResults]):
             blob_storage=init_managed_blob_storage(str(self._managed_assets_path)),
             seed_dataset_source=seed_dataset_source,
             seed_reader_registry=self._seed_reader_registry,
+            run_config=self._run_config,
         )
 
     def _get_interface_info(self, model_providers: list[ModelProvider]) -> InterfaceInfo:

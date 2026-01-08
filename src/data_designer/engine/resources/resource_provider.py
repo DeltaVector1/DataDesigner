@@ -3,6 +3,7 @@
 
 from data_designer.config.base import ConfigBase
 from data_designer.config.models import ModelConfig
+from data_designer.config.run_config import RunConfig
 from data_designer.config.seed_source import SeedSource
 from data_designer.config.utils.type_helpers import StrEnum
 from data_designer.engine.dataset_builders.artifact_storage import ArtifactStorage
@@ -23,6 +24,7 @@ class ResourceProvider(ConfigBase):
     artifact_storage: ArtifactStorage
     blob_storage: ManagedBlobStorage | None = None
     model_registry: ModelRegistry | None = None
+    run_config: RunConfig = RunConfig()
     seed_reader: SeedReader | None = None
 
 
@@ -35,6 +37,7 @@ def create_resource_provider(
     seed_reader_registry: SeedReaderRegistry,
     blob_storage: ManagedBlobStorage | None = None,
     seed_dataset_source: SeedSource | None = None,
+    run_config: RunConfig | None = None,
 ) -> ResourceProvider:
     seed_reader = None
     if seed_dataset_source:
@@ -51,4 +54,5 @@ def create_resource_provider(
         ),
         blob_storage=blob_storage or init_managed_blob_storage(),
         seed_reader=seed_reader,
+        run_config=run_config or RunConfig(),
     )

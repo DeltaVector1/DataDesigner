@@ -217,11 +217,14 @@ class ColumnWiseDatasetBuilder:
             f"🐙 Processing {generator.config.column_type} column '{generator.config.name}' "
             f"with {max_workers} concurrent workers"
         )
+        settings = self._resource_provider.run_config
         with ConcurrentThreadExecutor(
             max_workers=max_workers,
             column_name=generator.config.name,
             result_callback=self._worker_result_callback,
             error_callback=self._worker_error_callback,
+            shutdown_error_rate=settings.shutdown_error_rate,
+            shutdown_error_window=settings.shutdown_error_window,
         ) as executor:
             for i, record in self.batch_manager.iter_current_batch():
                 executor.submit(lambda record: generator.generate(record), record, context={"index": i})
