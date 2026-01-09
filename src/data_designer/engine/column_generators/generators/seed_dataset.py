@@ -1,6 +1,9 @@
 # SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
+
+from __future__ import annotations
+
 import functools
 import logging
 
@@ -16,7 +19,6 @@ from data_designer.engine.column_generators.generators.base import (
 from data_designer.engine.column_generators.utils.errors import SeedDatasetError
 from data_designer.engine.dataset_builders.multi_column_configs import SeedDatasetMultiColumnConfig
 from data_designer.engine.processing.utils import concat_datasets
-from data_designer.engine.resources.resource_provider import ResourceType
 
 MAX_ZERO_RECORD_RESPONSE_FACTOR = 2
 
@@ -30,7 +32,6 @@ class SeedDatasetColumnGenerator(FromScratchColumnGenerator[SeedDatasetMultiColu
             name="seed_dataset_column_generator",
             description="Sample columns from a seed dataset.",
             generation_strategy=GenerationStrategy.FULL_COLUMN,
-            required_resources=[ResourceType.SEED_READER],
         )
 
     @property

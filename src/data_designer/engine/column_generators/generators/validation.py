@@ -1,6 +1,8 @@
 # SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
+from __future__ import annotations
+
 import logging
 
 import pandas as pd
@@ -50,7 +52,6 @@ class ValidationColumnGenerator(ColumnGenerator[ValidationColumnConfig]):
             name="validate",
             description="Validate data.",
             generation_strategy=GenerationStrategy.FULL_COLUMN,
-            required_resources=None,
         )
 
     def generate(self, data: pd.DataFrame) -> pd.DataFrame:

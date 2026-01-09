@@ -21,7 +21,6 @@ def _create_test_metadata(name="test", description="test", strategy=GenerationSt
         name=name,
         description=description,
         generation_strategy=strategy,
-        required_resources=None,
     )
 
 
