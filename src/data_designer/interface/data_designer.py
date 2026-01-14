@@ -178,10 +178,13 @@ class DataDesigner(DataDesignerInterface[DatasetCreationResults]):
         except Exception as e:
             raise DataDesignerProfilingError(f"🛑 Error profiling dataset: {e}")
 
+        dataset_metadata = resource_provider.get_dataset_metadata()
+
         return DatasetCreationResults(
             artifact_storage=builder.artifact_storage,
             analysis=analysis,
             config_builder=config_builder,
+            dataset_metadata=dataset_metadata,
         )
 
     def preview(
@@ -245,11 +248,15 @@ class DataDesigner(DataDesignerInterface[DatasetCreationResults]):
         ):
             logger.info(f"{RandomEmoji.success()} Preview complete!")
 
+        # Create dataset metadata from the resource provider
+        dataset_metadata = resource_provider.get_dataset_metadata()
+
         return PreviewResults(
             dataset=processed_dataset,
             analysis=analysis,
             processor_artifacts=processor_artifacts,
             config_builder=config_builder,
+            dataset_metadata=dataset_metadata,
         )
 
     def validate(self, config_builder: DataDesignerConfigBuilder) -> None:
