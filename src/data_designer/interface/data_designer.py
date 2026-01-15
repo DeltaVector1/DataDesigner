@@ -1,10 +1,11 @@
 # SPDX-FileCopyrightText: Copyright (c) 2025-2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
+from __future__ import annotations
+
 import logging
 from pathlib import Path
-
-import pandas as pd
+from typing import TYPE_CHECKING
 
 from data_designer.config.analysis.dataset_profiler import DatasetProfilerResults
 from data_designer.config.config_builder import DataDesignerConfigBuilder
@@ -29,10 +30,7 @@ from data_designer.config.utils.constants import (
     PREDEFINED_PROVIDERS,
 )
 from data_designer.config.utils.info import InfoType, InterfaceInfo
-from data_designer.engine.analysis.dataset_profiler import (
-    DataDesignerDatasetProfiler,
-    DatasetProfilerConfig,
-)
+from data_designer.engine.analysis.dataset_profiler import DataDesignerDatasetProfiler, DatasetProfilerConfig
 from data_designer.engine.compiler import compile_data_designer_config
 from data_designer.engine.dataset_builders.artifact_storage import ArtifactStorage
 from data_designer.engine.dataset_builders.column_wise_builder import ColumnWiseDatasetBuilder
@@ -58,9 +56,16 @@ from data_designer.interface.errors import (
     DataDesignerProfilingError,
 )
 from data_designer.interface.results import DatasetCreationResults
+from data_designer.lazy_heavy_imports import pd
 from data_designer.logging import RandomEmoji
 from data_designer.plugins.plugin import PluginType
 from data_designer.plugins.registry import PluginRegistry
+
+if TYPE_CHECKING:
+    import pandas as pd
+
+logger = logging.getLogger(__name__)
+
 
 DEFAULT_SECRET_RESOLVER = CompositeResolver([EnvironmentResolver(), PlaintextResolver()])
 
@@ -71,8 +76,6 @@ DEFAULT_SEED_READERS = [
 ]
 for plugin in PluginRegistry().get_plugins(PluginType.SEED_READER):
     DEFAULT_SEED_READERS.append(plugin.impl_cls())
-
-logger = logging.getLogger(__name__)
 
 
 class DataDesigner(DataDesignerInterface[DatasetCreationResults]):

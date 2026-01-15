@@ -10,8 +10,9 @@ This file contains all possible fields that:
 Do not add any other code or logic in this file.
 """
 
-REQUIRED_FIELDS = {"first_name", "last_name", "age", "locale"}
+from __future__ import annotations
 
+REQUIRED_FIELDS = {"first_name", "last_name", "age", "locale"}
 
 PII_FIELDS = [
     # Core demographic fields
@@ -51,7 +52,6 @@ PII_FIELDS = [
     "second_language",
     "third_language",
 ]
-
 
 PERSONA_FIELDS = [
     # Core persona fields

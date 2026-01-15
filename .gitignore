@@ -93,3 +93,6 @@ docs/notebook_source/*.csv
 docs/**/artifacts/
 
 tests_e2e/uv.lock
+
+# Performance profiling
+perf_*.txt

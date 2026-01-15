@@ -14,7 +14,6 @@ from rich.rule import Rule
 from rich.table import Column, Table
 from rich.text import Text
 
-from data_designer.config.analysis.column_statistics import CategoricalHistogramData
 from data_designer.config.analysis.utils.errors import AnalysisReportError
 from data_designer.config.column_types import (
     DataDesignerColumnType,
@@ -29,6 +28,7 @@ from data_designer.config.utils.visualization import (
 )
 
 if TYPE_CHECKING:
+    from data_designer.config.analysis.column_statistics import CategoricalHistogramData
     from data_designer.config.analysis.dataset_profiler import DatasetProfilerResults
 
 HEADER_STYLE = "dim"

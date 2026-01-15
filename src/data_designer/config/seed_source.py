@@ -1,10 +1,11 @@
 # SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-from abc import ABC
-from typing import Literal
+from __future__ import annotations
 
-import pandas as pd
+from abc import ABC
+from typing import TYPE_CHECKING, Literal
+
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 from pydantic.json_schema import SkipJsonSchema
 from typing_extensions import Self
@@ -14,6 +15,10 @@ from data_designer.config.utils.io_helpers import (
     validate_dataset_file_path,
     validate_path_contains_files_of_type,
 )
+from data_designer.lazy_heavy_imports import pd
+
+if TYPE_CHECKING:
+    import pandas as pd
 
 
 class SeedSource(BaseModel, ABC):

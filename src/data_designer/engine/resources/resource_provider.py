@@ -1,6 +1,8 @@
 # SPDX-FileCopyrightText: Copyright (c) 2025-2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
+from __future__ import annotations
+
 from data_designer.config.base import ConfigBase
 from data_designer.config.dataset_metadata import DatasetMetadata
 from data_designer.config.models import ModelConfig
@@ -9,7 +11,8 @@ from data_designer.config.seed_source import SeedSource
 from data_designer.config.utils.type_helpers import StrEnum
 from data_designer.engine.dataset_builders.artifact_storage import ArtifactStorage
 from data_designer.engine.model_provider import ModelProviderRegistry
-from data_designer.engine.models.registry import ModelRegistry, create_model_registry
+from data_designer.engine.models.factory import create_model_registry
+from data_designer.engine.models.registry import ModelRegistry
 from data_designer.engine.resources.managed_storage import ManagedBlobStorage, init_managed_blob_storage
 from data_designer.engine.resources.seed_reader import SeedReader, SeedReaderRegistry
 from data_designer.engine.secret_resolver import SecretResolver
@@ -51,12 +54,16 @@ def create_resource_provider(
     seed_dataset_source: SeedSource | None = None,
     run_config: RunConfig | None = None,
 ) -> ResourceProvider:
+    """Factory function for creating a ResourceProvider instance.
+    This function triggers lazy loading of heavy dependencies like litellm.
+    """
     seed_reader = None
     if seed_dataset_source:
         seed_reader = seed_reader_registry.get_reader(
             seed_dataset_source,
             secret_resolver,
         )
+
     return ResourceProvider(
         artifact_storage=artifact_storage,
         model_registry=create_model_registry(

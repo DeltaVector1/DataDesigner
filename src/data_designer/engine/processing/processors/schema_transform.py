@@ -1,16 +1,21 @@
 # SPDX-FileCopyrightText: Copyright (c) 2025-2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
+from __future__ import annotations
+
 import json
 import logging
-
-import pandas as pd
+from typing import TYPE_CHECKING
 
 from data_designer.config.processors import SchemaTransformProcessorConfig
 from data_designer.engine.dataset_builders.artifact_storage import BatchStage
 from data_designer.engine.processing.ginja.environment import WithJinja2UserTemplateRendering
 from data_designer.engine.processing.processors.base import Processor
 from data_designer.engine.processing.utils import deserialize_json_values
+from data_designer.lazy_heavy_imports import pd
+
+if TYPE_CHECKING:
+    import pandas as pd
 
 logger = logging.getLogger(__name__)
 

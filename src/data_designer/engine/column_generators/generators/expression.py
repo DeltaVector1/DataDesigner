@@ -4,14 +4,17 @@
 from __future__ import annotations
 
 import logging
-
-import pandas as pd
+from typing import TYPE_CHECKING
 
 from data_designer.config.column_configs import ExpressionColumnConfig
 from data_designer.engine.column_generators.generators.base import ColumnGeneratorFullColumn
 from data_designer.engine.column_generators.utils.errors import ExpressionTemplateRenderError
 from data_designer.engine.processing.ginja.environment import WithJinja2UserTemplateRendering
 from data_designer.engine.processing.utils import deserialize_json_values
+from data_designer.lazy_heavy_imports import pd
+
+if TYPE_CHECKING:
+    import pandas as pd
 
 logger = logging.getLogger(__name__)
 

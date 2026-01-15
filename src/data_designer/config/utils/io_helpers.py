@@ -1,6 +1,8 @@
 # SPDX-FileCopyrightText: Copyright (c) 2025-2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
+from __future__ import annotations
+
 import json
 import logging
 import os
@@ -8,13 +10,16 @@ from datetime import date, datetime, timedelta
 from decimal import Decimal
 from numbers import Number
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-import numpy as np
-import pandas as pd
 import yaml
 
 from data_designer.config.errors import InvalidFileFormatError, InvalidFilePathError
+from data_designer.lazy_heavy_imports import np, pd
+
+if TYPE_CHECKING:
+    import numpy as np
+    import pandas as pd
 
 logger = logging.getLogger(__name__)
 

@@ -1,6 +1,8 @@
 # SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
+from __future__ import annotations
+
 from data_designer.config.column_types import DataDesignerColumnType
 from data_designer.config.utils.type_helpers import resolve_string_enum
 from data_designer.engine.column_generators.generators.base import ColumnGeneratorWithModelRegistry

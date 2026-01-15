@@ -1,16 +1,20 @@
 # SPDX-FileCopyrightText: Copyright (c) 2025-2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
+from __future__ import annotations
+
 import logging
 import shutil
 from pathlib import Path
-from typing import Callable, Container, Iterator
-
-import pandas as pd
-import pyarrow.parquet as pq
+from typing import TYPE_CHECKING, Callable, Container, Iterator
 
 from data_designer.engine.dataset_builders.artifact_storage import ArtifactStorage, BatchStage
 from data_designer.engine.dataset_builders.utils.errors import DatasetBatchManagementError
+from data_designer.lazy_heavy_imports import pd, pq
+
+if TYPE_CHECKING:
+    import pandas as pd
+    import pyarrow.parquet as pq
 
 logger = logging.getLogger(__name__)
 
